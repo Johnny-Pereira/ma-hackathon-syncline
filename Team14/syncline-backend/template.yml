@@ -22,7 +22,7 @@ Resources:
       # Role: arn:aws:iam::865187950544:role/reis-lambda-execution-role
       CodeUri: ./src/lambda
       Handler: lambda-handler.lambda_handler
-      Runtime: python3.12
+      Runtime: python3.9
       # VpcConfig:
       #   SecurityGroupIds:
       #     - !Sub "{{resolve:secretsmanager:${Secret}:SecretString:SECURITYGROUP_IDS}}"
