@@ -1,0 +1,57 @@
+version: 0.2
+
+env:
+  shell: bash
+  parameter-store:
+    GITHUB_TOKEN: "GITHUB_TOKEN"
+  # secrets-manager:
+
+  #   DEMO_NAME: ${ACCOUNT_ENV}/lambda/${PROJECT_NAME}-${ENVIRONMENT}:DEMO_NAME
+  #   DEMO_PASSWORD: ${ACCOUNT_ENV}/lambda/${PROJECT_NAME}-${ENVIRONMENT}:DEMO_PASSWORD
+  #   ACTUAL_ENV: ${ACCOUNT_ENV}/lambda/${PROJECT_NAME}-${ENVIRONMENT}:ACTUAL_ENV
+  #   ENV_SHORT: ${ACCOUNT_ENV}/lambda/${PROJECT_NAME}-${ENVIRONMENT}:ENV_SHORT
+  #   AWS_ACCOUNT_NUMBER: ${ACCOUNT_ENV}/lambda/${PROJECT_NAME}-${ENVIRONMENT}:AWS_ACCOUNT_NUMBER
+  #   SECURITYGROUP_IDS: ${ACCOUNT_ENV}/lambda/${PROJECT_NAME}-${ENVIRONMENT}:SECURITYGROUP_IDS
+  #   SUBNETID1: ${ACCOUNT_ENV}/lambda/${PROJECT_NAME}-${ENVIRONMENT}:SUBNETID1
+  #   SUBNETID2: ${ACCOUNT_ENV}/lambda/${PROJECT_NAME}-${ENVIRONMENT}:SUBNETID2
+  #   S3_BUCKET_NAME: ${ACCOUNT_ENV}/lambda/${PROJECT_NAME}-${ENVIRONMENT}:S3_BUCKET_NAME
+  #   S3_PREFIX: ${ACCOUNT_ENV}/lambda/${PROJECT_NAME}-${ENVIRONMENT}:S3_PREFIX
+  #   REGION: ${ACCOUNT_ENV}/lambda/${PROJECT_NAME}-${ENVIRONMENT}:REGION
+  #   PROFILE: ${ACCOUNT_ENV}/lambda/${PROJECT_NAME}-${ENVIRONMENT}:PROFILE
+  #   CONFIRM_CHANGESET: ${ACCOUNT_ENV}/lambda/${PROJECT_NAME}-${ENVIRONMENT}:CONFIRM_CHANGESET
+  #   OPENSEARCH_URL: ${ACCOUNT_ENV}/lambda/${PROJECT_NAME}-${ENVIRONMENT}:OPENSEARCH_URL
+
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.9
+    commands:
+      pip3 -q install --upgrade pip
+
+  pre_build:
+    on-failure: ABORT
+    commands:
+      - echo "Validating template..."
+      - sam validate -t sam_template.yml
+      - echo "Install pytest ...."
+      - pip3 install pytest
+      - pip3 install pytest-mock
+      - pip3 install -r src/lambda/requirements.txt
+  build:
+    on-failure: ABORT
+    commands:
+      - echo "Starting Run unit test..."
+      # - python3 -m pytest src/tests -v
+      - echo "Unit tests complete. Beginning SAM build"
+      - sam build
+      - echo "SAM build complete. Beginning Cloudformation deployment"
+      - aws cloudformation package --template .aws-sam/build/template.yaml --s3-bucket "$S3_BUCKET_NAME" --output-template template-export.yml
+      - echo "Lambda function artifacts created and ready for deployment" 
+  post_build:
+    commands:
+     
+artifacts:
+  type: zip
+  files:
+    - template-export.yml

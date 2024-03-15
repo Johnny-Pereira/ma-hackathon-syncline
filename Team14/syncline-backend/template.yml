@@ -1,0 +1,55 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+
+  MY Serivce
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 3
+Resources:
+  DevTemplateFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      FunctionName: ma-cre-lambda-reference
+      MemorySize: 5120
+      Timeout: 900
+      Policies:
+        # - LambdaCreateNetworkInterface
+        - SecretsManagerReadWrite
+        - AWSLambdaBasicExecutionRole
+      # Role: arn:aws:iam::865187950544:role/reis-lambda-execution-role
+      CodeUri: ./src/lambda
+      Handler: lambda-handler.lambda_handler
+      Runtime: python3.12
+      # VpcConfig:
+      #   SecurityGroupIds:
+      #     - !Sub "{{resolve:secretsmanager:${Secret}:SecretString:SECURITYGROUP_IDS}}"
+      #   SubnetIds:
+      #     - !Sub "{{resolve:secretsmanager:${Secret}:SecretString:SUBNETID1}}"
+      #     - !Sub "{{resolve:secretsmanager:${Secret}:SecretString:SUBNETID2}}"
+      Architectures:
+        - x86_64
+      #Environment:
+        #Variables:
+        # for example: OpenSearchUrl: !Sub "{{resolve:secretsmanager:${Secret}:SecretString:OPENSEARCH_URL}}"
+      # Tags:
+      #   contact: "joel.kass@moodys.com"
+      #   provisioned_by: "Joel Kass"
+      #   backup: "none"
+      #   cre_team: "REIS"
+      #   lob_division: "REIS"
+      #   application: !Sub "{{resolve:secretsmanager:${Secret}:SecretString:PROJECT_NAME}}"
+      #   environment: !Sub "{{resolve:secretsmanager:${Secret}:SecretString:ENV_SHORT}}"
+      #   owner: "sam.tailor@moodys.com"
+      #   account_env: !Sub "{{resolve:secretsmanager:${Secret}:SecretString:ENV_SHORT}}"
+      #   revenue: "n"
+      #   customer: "internal"
+      #   lob: "CRE"
+      Events:
+        MyAPI:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /test
+            Method: get
