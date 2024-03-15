@@ -9,10 +9,10 @@ Globals:
   Function:
     Timeout: 3
 Resources:
-  DevTemplateFunction:
+  SyncLineFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      FunctionName: ma-cre-lambda-reference
+      FunctionName: ma-hackathon-syncline
       MemorySize: 5120
       Timeout: 900
       Policies:
@@ -20,7 +20,7 @@ Resources:
         - SecretsManagerReadWrite
         - AWSLambdaBasicExecutionRole
       # Role: arn:aws:iam::865187950544:role/reis-lambda-execution-role
-      CodeUri: ./src/lambda
+      CodeUri: ./src
       Handler: lambda-handler.lambda_handler
       Runtime: python3.9
       # VpcConfig:
@@ -31,11 +31,11 @@ Resources:
       #     - !Sub "{{resolve:secretsmanager:${Secret}:SecretString:SUBNETID2}}"
       Architectures:
         - x86_64
-      #Environment:
-        #Variables:
-        # for example: OpenSearchUrl: !Sub "{{resolve:secretsmanager:${Secret}:SecretString:OPENSEARCH_URL}}"
-      # Tags:
-      #   contact: "joel.kass@moodys.com"
+      # Environment:
+      #   Variables:
+         #for example: OpenSearchUrl: !Sub "{{resolve:secretsmanager:${Secret}:SecretString:OPENSEARCH_URL}}"
+      #  Tags:
+      #    contact: "joel.kass@moodys.com"
       #   provisioned_by: "Joel Kass"
       #   backup: "none"
       #   cre_team: "REIS"
