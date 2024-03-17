@@ -2,11 +2,12 @@ version = 0.1
 [default]
 [default.deploy]
 [default.deploy.parameters]
-stack_name = "testing"
+stack_name = "syncline-app"
 s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-edoa4qygahhj"
-s3_prefix = "testing"
+s3_prefix = "syncline-app"
 region = "us-east-1"
 confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
 image_repositories = []
 resolve_s3 = true
+disable_rollback = true

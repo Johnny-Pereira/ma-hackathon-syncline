@@ -2,62 +2,44 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
 
-  MY Serivce
+  Syncline application stack
 
-# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
     Timeout: 3
+
 Resources:
   SyncLineFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Type: AWS::Serverless::Function
     Properties:
       FunctionName: ma-hackathon-syncline
       MemorySize: 5120
       Timeout: 900
       Policies:
-        # - LambdaCreateNetworkInterface
         - SecretsManagerReadWrite
         - AWSLambdaBasicExecutionRole
-      # Role: arn:aws:iam::865187950544:role/reis-lambda-execution-role
       CodeUri: ./src
       Handler: lambda-handler.lambda_handler
       Runtime: python3.9
-      # VpcConfig:
-      #   SecurityGroupIds:
-      #     - !Sub "{{resolve:secretsmanager:${Secret}:SecretString:SECURITYGROUP_IDS}}"
-      #   SubnetIds:
-      #     - !Sub "{{resolve:secretsmanager:${Secret}:SecretString:SUBNETID1}}"
-      #     - !Sub "{{resolve:secretsmanager:${Secret}:SecretString:SUBNETID2}}"
       Architectures:
         - x86_64
-      # Environment:
-      #   Variables:
-         #for example: OpenSearchUrl: !Sub "{{resolve:secretsmanager:${Secret}:SecretString:OPENSEARCH_URL}}"
-      #  Tags:
-      #    contact: "joel.kass@moodys.com"
-      #   provisioned_by: "Joel Kass"
-      #   backup: "none"
-      #   cre_team: "REIS"
-      #   lob_division: "REIS"
-      #   application: !Sub "{{resolve:secretsmanager:${Secret}:SecretString:PROJECT_NAME}}"
-      #   environment: !Sub "{{resolve:secretsmanager:${Secret}:SecretString:ENV_SHORT}}"
-      #   owner: "sam.tailor@moodys.com"
-      #   account_env: !Sub "{{resolve:secretsmanager:${Secret}:SecretString:ENV_SHORT}}"
-      #   revenue: "n"
-      #   customer: "internal"
-      #   lob: "CRE"
       Events:
         MyAPI:
           Type: Api
           Properties:
             Path: /test
             Method: get
-          
+            RestApiId: 
+              Ref: MyApiGateway
+
   MyApiGateway:
     Type: AWS::Serverless::Api
     Properties:
       StageName: Prod
+      Cors:
+        AllowOrigin: "'*'"
+        AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+        AllowMethods: "'GET,OPTIONS'"
       DefinitionBody:
         swagger: '2.0'
         info:
