@@ -98,7 +98,7 @@ export default function AddReviewForm() {
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a verified email to display" />
+                    <SelectValue placeholder="Select an OU" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
