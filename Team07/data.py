@@ -1,3 +1,16 @@
+import pandas as pd
+
+def read_csv(file_path):
+    # Read the CSV file into a DataFrame
+    df = pd.read_csv(file_path, encoding='utf-8')
+
+    # Select the second column (assuming it's named 'column2')
+    df_adjusted = df.iloc[:, 1]
+
+    # Convert the Series back into a DataFrame
+    df_single_column = df_adjusted.to_frame()
+    return df_single_column
+
 def prompt(thread):
     response = openai.ChatCompletion.create(
                 model = "gpt-4-1106-preview",
@@ -23,3 +36,8 @@ def prompt(thread):
     response_text = response.choices[0]["message"]["content"]
 
     return response_text
+
+def clean_messages():
+    df = read_csv('messages.csv')
+    for index, row in df.iterrows():
+        print(row.text)
