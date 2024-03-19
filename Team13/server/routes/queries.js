@@ -17,6 +17,15 @@ router.get('/', (req, res) => {
     res.send('This is the homepage!')
 })
 
+router.get('/ou', (req, res) => {
+    pool.query('SELECT * FROM blind.ou', (error, results) => {
+        if (error) {
+            throw error
+        }
+        res.status(200).json(results.rows)
+    })
+})
+
 router.get('/reviews', getFeedback)
 
 router.get('/reviews/:OU', (req, res) => {
