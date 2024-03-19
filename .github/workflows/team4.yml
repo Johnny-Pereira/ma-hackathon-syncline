@@ -18,6 +18,11 @@ jobs:
       - name: Install git
         run: sudo apt-get install git -y
 
+      - name: copy current branch name
+        run: |
+          current_branch = $(git rev-parse --abbrev-ref HEAD)
+          echo $current_branch
+
       - name: Get differences between branches
         id: diff
         run: |
