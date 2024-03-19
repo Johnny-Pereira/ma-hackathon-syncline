@@ -21,13 +21,39 @@ router.get('/reviews', getFeedback)
 
 router.get('/reviews/:OU', (req, res) => {
     console.log(req.params)
-    pool.query('SELECT title, feedback, rating, upvotes, downvotes FROM blind.feedback WHERE "OUID" = $1', [req.params.OU], (error, results) => {
-        if (error) {
-            throw error
-        }
-        res.status(200).json(results.rows)
-    })
-    
+    console.log(req.query.sort)
+    console.log(req.query.page)
+    sortParam = req.query.sort
+    switch (sortParam) {
+        case 'oldest':
+            // Sorting logic for sorting date oldest to newest 
+            querySort('SELECT title, feedback, rating, upvotes, downvotes FROM blind.feedback WHERE "OUID" = $1 ORDER BY date ASC OFFSET 25 * $2 LIMIT 25');    
+            break;
+        case 'highest':
+            // Sorting logic for sorting reviews highest to lowest
+            querySort('SELECT title, feedback, rating, upvotes, downvotes FROM blind.feedback WHERE "OUID" = $1 ORDER BY rating DESC OFFSET 25 * $2 LIMIT 25');   
+            break;
+        case 'lowest':
+            // Sorting logic for sorting reviews lowest to highest
+            querySort('SELECT title, feedback, rating, upvotes, downvotes FROM blind.feedback WHERE "OUID" = $1 ORDER BY rating ASC OFFSET 25 * $2 LIMIT 25');
+            break;    
+        case 'relevant':
+            // Sorting logic for sorting relevancy highest to lowest based on difference of up and down votes
+            querySort('SELECT title, feedback, rating, upvotes, downvotes FROM blind.feedback WHERE "OUID" = $1 ORDER BY ORDER BY (upvotes - downvotes) DESC OFFSET 25 * $2 LIMIT 25');   
+            break;
+        default:
+            // Sorting logic for sorting date newest to oldest (default), no query param
+            querySort('SELECT title, feedback, rating, upvotes, downvotes FROM blind.feedback WHERE "OUID" = $1 ORDER BY date DESC OFFSET 25 * $2 LIMIT 25');
+            break;
+    }
+    function querySort(query) {
+        pool.query(query, [req.params.OU], [req.query.page], (error, results) => {
+            if (error) {
+                throw error
+            }
+            res.status(200).json(results.rows)
+        })
+    }
 })
 
 router.post('/reviews', (req, res) => {
