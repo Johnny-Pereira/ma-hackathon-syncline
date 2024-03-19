@@ -20,7 +20,7 @@ jobs:
 
       - name: find differences
         run: |
-          git diff HEAD~1 HEAD > diff.txt
+          git diff HEAD^ HEAD > diff.txt
 
       - name: Get differences between branches
         id: diff
