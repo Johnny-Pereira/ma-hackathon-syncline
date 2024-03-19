@@ -1,49 +1,27 @@
-yaml
-name: Compare Branches
+name: Push Text File Test
 
 on:
   push:
     branches:
-      - "*"
+      - main
+    paths:
+      - 'Team04/**/*.txt'
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
-
-    - name: Configure AWS credentials
-      run: |
-        aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws configure set region us-east-1
-
     steps:
-    - name: Checkout base branch
+    - name: Checkout repository
       uses: actions/checkout@v2
-      with:
-        ref: 'main'
 
-    - name: copy current branch name
+    - name: Create a text file
       run: |
-        bash
-        current_branch = $(git rev-parse --abbrev-ref HEAD)
+        echo "This is a test file." > Team04/testfile.txt
 
-    - name: Checkout compare branch
-      uses: actions/checkout@v2
-      with:
-        ref: $current_branch
-        path: './branch-to-compare'
-
-    - name: Compare differences
+    - name: Push the text file
       run: |
-        git diff --color ./ ./branch-to-compare > diff.txt
-        if [ -s diff.txt ]; then
-          echo "Differences found and written to diff.txt"
-        else
-          echo "No differences found."
-        fi
-
-    - name: Upload differences
-      uses: actions/upload-artifact@v2
-      with:
-        name: diff-output
-        path: diff.txt
+        git config user.name 'github-actions'
+        git config user.email 'github-actions@github.com'
+        git add Team04/testfile.txt
+        git commit -m "Add test text file"
+        git push
