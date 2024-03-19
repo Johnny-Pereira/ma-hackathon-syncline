@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'Team04/**/*.txt'
+      - 'Team04/**/**'
 
 jobs:
   test:
