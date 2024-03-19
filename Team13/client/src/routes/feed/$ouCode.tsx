@@ -1,10 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/feed/$ouCode")({
-  component: OUFeed,
+  component: FeedRoute,
 });
 
-function OUFeed() {
+export function FeedRoute() {
   const { ouCode } = Route.useParams();
-  return <div>OU {ouCode}</div>;
+  return (
+    <div>
+      <h1>OU Code ${ouCode}</h1>
+    </div>
+  );
 }
