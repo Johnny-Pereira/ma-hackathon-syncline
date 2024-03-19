@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router();
+const moment = require('moment')
 const dotenv = require('dotenv').config()
 const pool = require('./connection')
 
@@ -25,6 +26,17 @@ router.get('/reviews/:OU', (req, res) => {
             throw error
         }
         res.status(200).json(results.rows)
+    })
+    
+})
+
+router.post('/reviews', (req, res) => {
+    console.log(req.body)
+    pool.query('INSERT INTO blind.feedback ("OUID", "userID", title, feedback, rating, date) VALUES ($1, $2, $3, $4, $5, $6)', [req.body.ouid, req.body.userid, req.body.title, req.body.feedback, req.body.rating, moment().format("YYYY-MM-DD HH:mm:ss")], (error) => {
+        if (error) {
+            throw error
+        }
+        res.status(201).send("Review added")
     })
 })
 
