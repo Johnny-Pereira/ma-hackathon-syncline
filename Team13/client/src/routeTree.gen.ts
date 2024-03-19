@@ -13,8 +13,8 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as FeedIndexImport } from './routes/feed.index'
-import { Route as FeedOuCodeImport } from './routes/feed.$ouCode'
+import { Route as FeedIndexImport } from './routes/feed/index'
+import { Route as FeedOuCodeImport } from './routes/feed/$ouCode'
 
 // Create Virtual Routes
 
