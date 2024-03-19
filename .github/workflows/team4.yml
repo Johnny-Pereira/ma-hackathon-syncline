@@ -5,29 +5,26 @@ on:
     branches:
       - main
     paths:
-      - 'Team04/**/**'
+      - 'Team04/**'
 
 jobs:
-  test:
+  compare-branches:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout branches
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
 
-    - name: copy current branch name
-      run: |
-        bash
-        current_branch = $(git rev-parse --abbrev-ref HEAD)
-        echo $current_branch
+      - name: Compare branches
+        run: |
+          diff --recursive --ignore-submodules main current > differences.txt
 
-    - name: Create a text file
-      run: |
-        echo "This is a test file." > Team04/testfile.txt
+      - name: Write differences to file
+        run: |
+          echo "Differences found:" >> differences.txt
+          cat differences.txt
 
-    - name: Push the text file
-      run: |
-        git config user.name 'github-actions'
-        git config user.email 'github-actions@github.com'
-        git add Team04/testfile.txt
-        git commit -m "Add test text file"
-        git push
+      - name: Clean up
+        run: |
+          rm differences.txt
