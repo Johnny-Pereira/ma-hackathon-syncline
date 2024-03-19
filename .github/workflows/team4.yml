@@ -18,7 +18,7 @@ jobs:
       - name: Install git
         run: sudo apt-get install git -y
 
-      - name: copy current branch name
+      - name: find differences
         run: |
           git diff HEAD~1 HEAD > diff.txt
 
