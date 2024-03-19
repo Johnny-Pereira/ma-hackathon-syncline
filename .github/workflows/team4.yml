@@ -18,7 +18,7 @@ jobs:
 
       - name: Compare branches
         run: |
-          diff --recursive --ignore-submodules main current > differences.txt
+          diff --recursive main current > differences.txt
 
       - name: Write differences to file
         run: |
