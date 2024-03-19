@@ -18,16 +18,14 @@ jobs:
       - name: Install git
         run: sudo apt-get install git -y
 
-      - name: Get list of changed files
-        id: changed-files
+      - name: Get differences between branches
+        id: diff
         run: |
           git fetch origin main
-          CHANGED_FILES=$(git diff --name-only origin/main ${GITHUB_REF})
-          echo "::set-output name=changed_files::${CHANGED_FILES}"
+          git diff --name-status origin/main ${GITHUB_REF} > differences.txt || echo "No differences found"
 
-      - name: Write differences to file
-        run: |
-          echo "${{ steps.changed-files.outputs.changed_files }}" > differences.txt
+      - name: Display differences
+        run: cat differences.txt
 
       - name: Commit and push changes
         if: always()
