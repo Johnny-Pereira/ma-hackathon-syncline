@@ -110,9 +110,11 @@ export default function AddReviewForm() {
                   <SelectItem value="DS">Data Solutions</SelectItem>
                   <SelectItem value="PA">Predictive Analytics</SelectItem>
                   <SelectItem value="DI">Digital Insights</SelectItem>
-                  <SelectItem value="CPO">CPO</SelectItem>
-                  <SelectItem value="CAO">CAO</SelectItem>
-                  <SelectItem value="CRO">CRO</SelectItem>
+                  <SelectItem value="CPO">Chief Product Office</SelectItem>
+                  <SelectItem value="CAO">
+                    Chief Administrative Office
+                  </SelectItem>
+                  <SelectItem value="CRO">Chief Revenue Office</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />
