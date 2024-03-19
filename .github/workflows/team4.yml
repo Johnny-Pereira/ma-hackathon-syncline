@@ -27,7 +27,9 @@ jobs:
           fi
 
       - name: Display differences
-        run: cat diff.txt
+        run: |
+          cd Team04
+          cat diff.txt
 
       - name: Commit and push changes
         if: always()
