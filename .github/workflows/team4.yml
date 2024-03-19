@@ -19,6 +19,7 @@ jobs:
 
       - name: Generate diff file or handle single commit history
         run: |
+          cd Team04
           if [ $(git rev-list --count HEAD) -gt 1 ]; then
             git diff HEAD~1 HEAD > diff.txt
           else
