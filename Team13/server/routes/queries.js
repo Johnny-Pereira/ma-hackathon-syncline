@@ -18,4 +18,14 @@ router.get('/', (req, res) => {
 
 router.get('/reviews', getFeedback)
 
+router.get('/reviews/:OU', (req, res) => {
+    console.log(req.params)
+    pool.query('SELECT title, feedback, rating, upvotes, downvotes FROM blind.feedback WHERE "OUID" = $1', [req.params.OU], (error, results) => {
+        if (error) {
+            throw error
+        }
+        res.status(200).json(results.rows)
+    })
+})
+
 module.exports = router;
