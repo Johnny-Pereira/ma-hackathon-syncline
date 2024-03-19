@@ -1,0 +1,11 @@
+{
+    "name": "moodysblind",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+      "@auth0/auth0-react": "^2.2.0",
+      "react": "^18",
+      "react-dom": "^18",
+      "react-router-dom": "^5.3"
+    }
+  }

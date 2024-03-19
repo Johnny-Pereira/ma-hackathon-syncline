@@ -5,6 +5,7 @@ import App from './App';
 
 const root = createRoot(document.getElementById('root'));
 
+//Auth0 (Okta) config information 
 root.render(
 <Auth0Provider
     domain="dev-obx4reobb48jww42.us.auth0.com"
