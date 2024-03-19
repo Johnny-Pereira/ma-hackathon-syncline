@@ -20,8 +20,7 @@ jobs:
 
       - name: copy current branch name
         run: |
-          current_branch = $(git rev-parse --abbrev-ref HEAD)
-          echo $current_branch
+          git diff HEAD~1 HEAD > diff.txt
 
       - name: Get differences between branches
         id: diff
@@ -30,13 +29,13 @@ jobs:
           git diff --name-status origin/main ${GITHUB_REF} > differences.txt || echo "No differences found"
 
       - name: Display differences
-        run: cat differences.txt
+        run: cat diff.txt
 
       - name: Commit and push changes
         if: always()
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add differences.txt
+          git add diff.txt
           git commit -m "Add differences between branches"
           git push
