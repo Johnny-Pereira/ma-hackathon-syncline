@@ -1,7 +1,20 @@
 const express = require('express');
 const validationHandler = require('./validation/validation');
+const bodyParser = require('body-parser')
+const cors = require('cors')
+
 const app = express();
-const port = 3000;
+
+app.use(bodyParser.urlencoded({extended : true}));
+app.use(bodyParser.json());
+app.use(cors())
+
+app.use('/api/', require('./routes/queries'))
+
+const PORT = 3000
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`)
+})
 
 app.get('/', async (req, res) => {
     try {
@@ -10,8 +23,4 @@ app.get('/', async (req, res) => {
         console.error(error);
         res.status(500).send('Error');
     }
-});
-
-app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
 });
