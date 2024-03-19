@@ -17,18 +17,13 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install git
-        run: sudo apt-get install git -y
-
-      - name: find differences
+      - name: Generate diff file or handle single commit history
         run: |
-          git diff HEAD^ HEAD > diff.txt
-
-      - name: Get differences between branches
-        id: diff
-        run: |
-          git fetch origin main
-          git diff --name-status origin/main ${GITHUB_REF} > differences.txt || echo "No differences found"
+          if [ $(git rev-list --count HEAD) -gt 1 ]; then
+            git diff HEAD~1 HEAD > diff.txt
+          else
+            echo "Not enough commits for a diff." > diff.txt
+          fi
 
       - name: Display differences
         run: cat diff.txt
