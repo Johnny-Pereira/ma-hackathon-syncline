@@ -10,21 +10,30 @@ on:
 jobs:
   compare-branches:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout branches
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 1
 
-      - name: Compare branches
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install git
+        run: sudo apt-get install git -y
+
+      - name: Get list of changed files
+        id: changed-files
         run: |
-          diff --recursive main current > differences.txt
+          git fetch origin main
+          CHANGED_FILES=$(git diff --name-only origin/main ${GITHUB_REF})
+          echo "::set-output name=changed_files::${CHANGED_FILES}"
 
       - name: Write differences to file
         run: |
-          echo "Differences found:" >> differences.txt
-          cat differences.txt
+          echo "${{ steps.changed-files.outputs.changed_files }}" > differences.txt
 
-      - name: Clean up
+      - name: Commit and push changes
+        if: always()
         run: |
-          rm differences.txt
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add differences.txt
+          git commit -m "Add differences between branches"
+          git push
