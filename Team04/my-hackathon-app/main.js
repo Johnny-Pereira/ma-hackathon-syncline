@@ -3,6 +3,21 @@ import './styles.css'
 // Code snippets for Repository 1
 const codeSnippets = {
   outdated: `
+  <style>
+        pre {
+            background-color: #F6F8FA;
+            border: 1px solid #E1E4E8;
+            border-radius: 6px;
+            padding: 16px;
+            overflow: auto;
+            line-height: 1.45;
+            font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, Courier, monospace;
+            font-size: 0.95em;
+        }
+        code {
+            color: #;
+        }
+    </style>
     <pre><code class="outdated-code">
       function createGreeting(name, age) {
         var greeting = 'Hello, my name is ' + name + ' and I am ' + age + ' years old.';
