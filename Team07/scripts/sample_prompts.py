@@ -2,6 +2,7 @@ import os
 import openai
 import json
 import pandas as pd
+
 with open("config.json") as file:
     config = json.load(file)
 openai.api_key = config.get('key')

@@ -6,7 +6,7 @@ This is the main repository for Team07's project for the MA-COR Hackathon 2024.
 
 ## Project Structure
 
-- `config.toml`: Contains configuration settings for the project.
+- `scripts/`: Contains scripts for cleaning data and generating sample prompts
 - `data/`: Contains CSV files with message data.
 - `src/`: Contains the source code for the project.
 
@@ -15,17 +15,18 @@ This is the main repository for Team07's project for the MA-COR Hackathon 2024.
 To set up the project, follow these steps:
 
 1. Clone the repository.
-2. Install the necessary dependencies.
-3. Run the project.
+2. Install the necessary dependencies by running the requirements.txt file (pip install -r requirements.txt).
+3. Locate app.py (in src/ directory)
 
-## Contributing
+## Running App
 
-We welcome contributions! Please see our contributing guidelines for more details.
+To run the application, run the command:
+chainlit run _path_to_app.py_
 
-## License
+## Contributors
 
-This project is licensed under the MIT License.
-
-## Contact
-
-For any questions or concerns, please open an issue on this repository.
+- Ferina Patel (@FerinaP)
+- Luis Merida (@meridal)
+- Payton Chi (@Pichiota)
+- Rajrishi Das (@dasr11)
+- Swapna Savalgi (@Swapna-Savalgi-moodys)

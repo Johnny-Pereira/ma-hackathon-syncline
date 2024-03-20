@@ -1,4 +1,5 @@
 # .gitignore
+config.json
 Dockerfile
 .mypy_cache/
-.chainlit/
+
