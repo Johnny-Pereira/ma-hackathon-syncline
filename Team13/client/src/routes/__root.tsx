@@ -8,9 +8,13 @@ export const Route = createRootRouteWithContext<{
 
 function RootComponent() {
   return (
-    <div className="px-8 py-2">
+    <>
+    <div>
       <Header />
+    </div>
+    <div className="px-8 py-2">
       <Outlet />
     </div>
+    </>
   );
 }
