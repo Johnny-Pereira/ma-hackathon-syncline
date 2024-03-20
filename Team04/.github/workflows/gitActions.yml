@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'Team04/**/*.txt'
+      - 'Team04/**/**'
 
 jobs:
   test:
@@ -13,6 +13,12 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+
+    - name: copy current branch name
+      run: |
+        bash
+        current_branch = $(git rev-parse --abbrev-ref HEAD)
+        echo $current_branch
 
     - name: Create a text file
       run: |

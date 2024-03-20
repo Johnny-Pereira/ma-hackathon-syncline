@@ -5,23 +5,34 @@ on:
     branches:
       - main
     paths:
-      - 'Team04/**/*.txt'
+      - 'Team04/**'
 
 jobs:
-  test:
+  compare-branches:
     runs-on: ubuntu-latest
+
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
-    - name: Create a text file
-      run: |
-        echo "This is a test file." > Team04/testfile.txt
+      - name: Generate diff file or handle single commit history
+        run: |
+          if [ $(git rev-list --count HEAD) -gt 1 ]; then
+            git diff HEAD~1 HEAD > diff.txt
+          else
+            echo "Not enough commits for a diff." > diff.txt
+          fi
 
-    - name: Push the text file
-      run: |
-        git config user.name 'github-actions'
-        git config user.email 'github-actions@github.com'
-        git add Team04/testfile.txt
-        git commit -m "Add test text file"
-        git push
+      - name: Display differences
+        run: cat diff.txt
+
+      - name: Commit and push changes
+        if: always()
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add diff.txt
+          git commit -m "Add differences between branches"
+          git push
