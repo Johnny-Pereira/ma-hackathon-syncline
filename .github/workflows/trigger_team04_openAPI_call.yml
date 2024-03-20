@@ -26,6 +26,4 @@ jobs:
           pip install -r requirements.txt 
 
       - name: Run Python script
-        run: |
-            cd Team04
-            python Copilot_API_call.py
+        run: python Copilot_API_call.py
