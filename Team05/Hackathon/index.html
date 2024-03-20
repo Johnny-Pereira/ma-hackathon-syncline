@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stack Overflow Code Search</title>
+<link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <header>
+        <a href="index.html">
+            <img src="/images/download.png" alt="Logo">
+        </a>
+    </header>
+    <div class="mainContainer">
+    <div class="sidenav">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="messages.html">Messages</a></li>
+            <li><a href="user.html">User</a></li>
+            <li><a href="bookmarks.html">Bookmarks</a></li>
+            <li><a href="solution.html">Solutions</a></li>
+        </ul>
+    </div>
+    <div class="content">
+        <label for="codeInput">Search for Possible Solutions</label>
+          <textarea id="codeInput" rows="16" placeholder="Enter your Code..."></textarea>
+          <button onclick="searchStackOverflow()">Search</button>
+    </div>
+    </div>
+    <script>
+        function searchStackOverflow() {
+          const code = document.getElementById('codeInput').value;
+          if (code.trim() === '') {
+            alert('Enter code to search for possible solutions.');
+            return;
+          }
+          const searchUrl = 'https://stackoverflow.com/search?q=' + encodeURIComponent(code);
+          window.open(searchUrl, '_blank');
+        }
+      </script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stack Overflow Code Search</title>
+<link rel="stylesheet" href="/css/styles.css">
+<link rel="stylesheet" href="/css/messages.css">
+</head>
+<body>
+    <header>
+        <a href="index.html">
+            <img src="/images/download.png" alt="Logo">
+        </a>
+    </header>
+    <div class="mainContainer">
+    <div class="sidenav">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="messages.html">Messages</a></li>
+            <li><a href="user.html">User</a></li>
+            <li><a href="bookmarks.html">Bookmarks</a></li>
+            <li><a href="solution.html">Solutions</a></li>
+        </ul>
+    </div>
+    <div class="content">
+        <label for="question">I am getting a compile error when trying to run my code! Anyone know why?</label>
+          <textarea id="codeforQuestion" rows="16">function greet(name) {
+            return "Hello, " + name;
+        }
+        
+        console.log(greet("World"));
+        
+        let numbers = [1, 2, 3, 4, 5];
+        
+        for (let i = 0; i <= numbers.length; i++) {
+            console.log(numbers[i]);
+        }
+        
+        function calculateAverage(numbers) {
+            let total = 0;
+            for (let number of numbers) {
+                total += number;
+            }
+            return total / numbers.length;
+        }
+        
+        console.log(calculateAverage([1, 2, 3, "four", 5])); // Passing a string "four" to calculateAverage function, causing a compile error
+        </textarea>
+        <button id="newCommentBtn">New Comment</button>
+        <div class="messageSystem">
+            <ul class="message-list">
+                <li class="message">
+                    <div class="sender">John Doe</div>
+                    <div class="question">This is the solution to your problem;
+                        <p>function greet(name) {
+                            return "Hello, " + name;
+                        }
+                        
+                        console.log(greet("World"));
+                        
+                        let numbers = [1, 2, 3, 4, 5];
+                        
+                        for (let i = 0; i < numbers.length; i++) { // Changed loop condition to prevent going out of bounds
+                            console.log(numbers[i]);
+                        }
+                        
+                        function calculateAverage(numbers) {
+                            let filteredNumbers = numbers.filter(number => typeof number === 'number'); // Filter out non-numeric values
+                            let total = filteredNumbers.reduce((sum, num) => sum + num, 0); // Calculate total
+                            return total / filteredNumbers.length; // Calculate average
+                        }
+                        
+                        console.log(calculateAverage([1, 2, 3, "four", 5])); // This will now calculate the average without the string "four"
+                        </p>
+                    </div>
+                    <div class="date">12/6/2024</div>
+                </li>
+            </ul>
+           </div>
+    </div>
+    </div>
+    <script src="comment.js"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+.bookmarkHeader {
+    font-size: 35px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: #091164;;
+}
+
+.bookmarkSystem {
+    padding: 20px;
+}
+
+.bookmark-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.bookmark {
+    border-bottom: 1px solid #c4c4c4;
+    padding: 10px 0;
+}
+
+.bookmarkQuestion {
+    font-weight: bold;
+}
+
+.bookmarkUser {
+    margin-top: 5px;
+}
+
+.bookmarkDate {
+    color: #878484;
+    font-size: 0.8em;
+}
