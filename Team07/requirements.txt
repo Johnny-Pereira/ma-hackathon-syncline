@@ -1,0 +1,7 @@
+# requirements.txt
+
+pandas
+openai==0.28.0
+langchain
+langchain-community
+chainlit
