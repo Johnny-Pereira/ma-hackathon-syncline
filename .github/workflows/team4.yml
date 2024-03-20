@@ -2,6 +2,8 @@ name: Push Text File Test
 
 on:
   push:
+    branches:
+      - "*"
     branches-ignore:
       - main
     paths:
