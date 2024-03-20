@@ -5,6 +5,7 @@ export const LogoutButton = () => {
 
   return (
     <Button
+    variant='secondary'
       onClick={() =>
         logout({ logoutParams: { returnTo: "http://localhost:5173" } })
       }
