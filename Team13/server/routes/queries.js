@@ -60,7 +60,8 @@ router.get('/reviews/:OU', (req, res) => {
     }
 
     const offset = (req.query.page - 1) * 25; 
-    const params = [req.params.OU, offset];
+    const params = [req.params.OU.toUpperCase(), offset];
+    console.log(params)
 
     pool.query(query, params, (error, results) => {
         if (error) {
@@ -76,7 +77,7 @@ router.post("/reviews", (req, res) => {
   pool.query(
     'INSERT INTO blind.feedback ("OUID", "userID", title, feedback, rating, date) VALUES ($1, $2, $3, $4, $5, $6)',
     [
-      req.body.ouid,
+      req.body.ouid.toUpperCase(),
       req.body.userid,
       req.body.title,
       req.body.feedback,
@@ -91,7 +92,7 @@ router.post("/reviews", (req, res) => {
       // gets updated average rating of OU and updates OU table with new average
       const currentRating = pool.query(
         'SELECT AVG(rating) FROM blind.feedback WHERE "OUID" = $1',
-        [req.body.ouid],
+        [req.body.ouid.toUpperCase()],
         (error, results) => {
           if (error) {
             throw error;
@@ -99,7 +100,7 @@ router.post("/reviews", (req, res) => {
           console.log(`Current OU Rating: ${results.rows[0].avg}`);
           pool.query(
             'UPDATE blind.ou SET ou_rating = $1 WHERE "code" = $2',
-            [results.rows[0].avg, req.body.ouid],
+            [results.rows[0].avg, req.body.ouid.toUpperCase()],
             (error, results) => {
               if (error) {
                 throw error;
