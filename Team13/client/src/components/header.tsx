@@ -5,15 +5,15 @@ import { Link } from "@tanstack/react-router";
 
 export default function Header() {
   // get auth status and render different buttons based on isLoggedIn or not
-  const { isLoading, isAuthenticated } = useAuth0();
-
-  if (isLoading) {
-    return <>Loading...</>;
-  }
+  const { isAuthenticated } = useAuth0();
 
   return (
-    <div style={{ display: "flex", justifyContent: "space-between" }}>
-      <Link to={isAuthenticated ? "/feed" : "/"}>Moody's Blind</Link>
+    <div className="flex justify-between sticky top-0 bg-blue-800 h-20 px-4 py-2 items-center" style={{ backgroundColor: "rgba(10,18,100,255)"}}>
+      <Link to={isAuthenticated ? "/feed" : "/"}>
+        <h1 className="font-america text-xl font-extrabold text-white">
+          MOODYS<span className="font-thin">BLIND</span>
+        </h1>
+      </Link>
       {isAuthenticated ? <LogoutButton /> : <LoginButton />}
     </div>
   );

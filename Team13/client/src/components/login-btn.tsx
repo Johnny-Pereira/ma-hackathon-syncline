@@ -4,5 +4,12 @@ import { Button } from "./ui/button";
 export const LoginButton = () => {
   const { loginWithRedirect } = useAuth0();
 
-  return <Button onClick={() => loginWithRedirect()}>Login</Button>;
+  return (
+    <Button
+      onClick={() => loginWithRedirect()}
+      variant='secondary'
+    >
+      Login
+    </Button>
+  );
 };
