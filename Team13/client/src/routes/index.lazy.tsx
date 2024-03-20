@@ -19,14 +19,14 @@ export const Route = createLazyFileRoute("/")({
 
 
 
-const sampleReviewData = [{ 'OUname': "Banking OU", 'date': '3/5/23', 'teamName': 'Banking team', 'review': 'sample review text, Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate ratione ipsam mollitia? Natus eaque earum reiciendis maiores illo explicabo iste obcaecati nisi ex, quos voluptatum corporis facere ullam modi quo.', 'rating': '3.5' }, { 'OUname': "CRE OU", 'date': '1/2/23', 'teamName': 'CRE team', 'review': 'another sample review text, Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate ratione ipsam mollitia? Natus eaque earum reiciendis maiores illo explicabo iste obcaecati nisi ex, quos voluptatum corporis facere ullam modi quo.', 'rating': '5' }]
+const sampleReviewData = [{ 'OUname': "Banking OU", 'date': '3/5/23', 'teamName': 'Banking team', 'review': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate ratione ipsam mollitia? Natus eaque earum reiciendis maiores illo explicabo iste obcaecati nisi ex, quos voluptatum corporis facere ullam modi quo.', 'rating': '4' }, { 'OUname': "CRE OU", 'date': '1/2/23', 'teamName': 'CRE team', 'review': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate ratione ipsam mollitia? Natus eaque earum reiciendis maiores illo explicabo iste obcaecati nisi ex, quos voluptatum corporis facere ullam modi quo.', 'rating': '5' }]
 
 function Index() {
   const { loginWithRedirect } = useAuth0();
   return (
     <>
 
-      <div style={{ width: "%", marginLeft: "auto", marginRight: "auto" }}>
+      <div className="text-xl" style={{ width: "%", marginLeft: "auto", marginRight: "auto", padding: '0.5rem' }}>
         <p>Moody's has implemented an anonymous application that allows staff to review team communication/culture and provide recommendations on how teams can grow and become more effective without feeling tied to a particular idea. </p>
         <p>
           This not only fosters a culture of open communication but also enables cross-pollination of ideas between teams and OUs.
@@ -75,7 +75,7 @@ function Index() {
 
 
       </div >
-      <div style={{ width: "15%", marginLeft: "auto", marginRight: "auto" }}>
+      <div style={{ display: "grid", justifyContent: "center" }}>
 
         <Button onClick={() => loginWithRedirect()}>Post a review</Button>
       </div>
