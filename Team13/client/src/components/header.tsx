@@ -9,7 +9,11 @@ export default function Header() {
 
   return (
     <div className="flex justify-between sticky top-0">
-      <Link to={isAuthenticated ? "/feed" : "/"}>Moody's Blind</Link>
+      <Link to={isAuthenticated ? "/feed" : "/"}>
+        <h1 className="font-america text-xl font-extrabold">
+          MOODYS<span className="font-thin">BLIND</span>
+        </h1>
+      </Link>
       {isAuthenticated ? <LogoutButton /> : <LoginButton />}
     </div>
   );

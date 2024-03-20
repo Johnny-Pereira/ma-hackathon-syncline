@@ -10,18 +10,9 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { reviewQueryOptions } from "@/api/review";
-import { SampleReviews } from "@/data";
+import { SampleOUs, SampleReviews } from "@/data";
 import ReviewCard from "@/components/review-card";
-/**
- * Query sorting options
- * date (asc/desc)
- * rating (asc/desc)
- * relevancy
- */
-// export const Route = createFileRoute("/feed/$ouCode")({
-//   component: FeedRoute,
-//   validateSearch: feedbackSearchSchema,
-// });
+
 export const Route = createFileRoute("/feed/$ouCode")({
   // loader: ({ context: { queryClient }, params: { ouCode } }) =>
   //   queryClient.ensureQueryData(reviewQueryOptions(ouCode)),
@@ -35,12 +26,13 @@ export function FeedRoute() {
   const { ouCode } = Route.useParams();
 
   const reviews = Route.useLoaderData();
+  const ou = SampleOUs.find((ou) => ou.code === ouCode);
 
   return (
-    <div className="w-full h-full">
-      <h1>OU Code ${ouCode}</h1>
+    <div className="w-full h-full justify-center flex flex-col gap-y-3">
+      <h1 className="text-3xl text-center">{ou?.name}</h1>
       <Dialog>
-        <Button asChild>
+        <Button asChild className="w-fit">
           <DialogTrigger>Add a review</DialogTrigger>
         </Button>
         <DialogContent>
@@ -52,8 +44,10 @@ export function FeedRoute() {
       </Dialog>
 
       <div className="space-y-2">
-        {reviews.map((review) => (
-          <li key={review.id}>
+        {reviews.length === 0 ? (
+          <>No reviews yet, post one now!</>
+        ) : (
+          reviews.map((review) => (
             <ReviewCard
               title={review.title}
               feedback={review.feedback}
@@ -62,8 +56,8 @@ export function FeedRoute() {
               date={review.date}
               id={review.id}
             />
-          </li>
-        ))}
+          ))
+        )}
       </div>
     </div>
   );

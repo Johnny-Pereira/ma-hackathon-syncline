@@ -2,7 +2,7 @@ import { queryOptions } from "@tanstack/react-query";
 import { instance } from ".";
 
 export type OUType = {
-  id: string;
+  id: number;
   code: string; // shorthand designator i.e. KYC, CRE
   name: string; // official desginator i.e. Know Your Customer
   avg_rating: number;

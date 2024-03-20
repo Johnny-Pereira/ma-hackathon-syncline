@@ -2,7 +2,7 @@ import { queryOptions } from "@tanstack/react-query";
 import { instance } from ".";
 
 export type ReviewType = {
-  id: string;
+  id: number;
   title: string;
   feedback: string;
   rating: number;

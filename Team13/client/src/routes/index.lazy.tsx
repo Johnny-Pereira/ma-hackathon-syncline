@@ -26,7 +26,7 @@ function Index() {
   return (
     <>
 
-      <div>
+      <div style={{ width: "%", marginLeft: "auto", marginRight: "auto" }}>
         <p>Moody's has implemented an anonymous application that allows staff to review team communication/culture and provide recommendations on how teams can grow and become more effective without feeling tied to a particular idea. </p>
         <p>
           This not only fosters a culture of open communication but also enables cross-pollination of ideas between teams and OUs.
