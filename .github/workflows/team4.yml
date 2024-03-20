@@ -3,11 +3,9 @@ name: Push Text File Test
 on:
   push:
     branches:
-      - "*"
+      - "Team04*"
     branches-ignore:
       - main
-    paths:
-      - 'Team04/**'
 
 jobs:
   compare-branches:
