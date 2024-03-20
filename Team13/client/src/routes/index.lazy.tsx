@@ -50,7 +50,7 @@ function Index() {
 
 
 <div className="max-w-4xl mt-4 mb-4 mx-auto">
-  <h2 className="text-2xl font-extrabold font-america">
+  <h2 className="text-4xl font-extrabold font-america text-center">
     MOODYS<span className="font-thin">BLIND</span> 
   </h2>
   <hr className="mt-2 mb-2"></hr>
@@ -71,7 +71,7 @@ function Index() {
 
       <div className="p-2">
 
-        <div className="flex flex-row" style={{ width: "75%", marginLeft: "auto", marginRight: "auto" }}>
+        <div className="flex flex-row" style={{ width: "100%", marginLeft: "auto", marginRight: "auto" }}>
           {sampleReviewData.map((review, i) => (<div className="basis-1/2" style={{ padding: '10px' }} key={i}>  <Card style={{ minHeight: '300px' }}>
             <CardHeader>
               <CardTitle>
@@ -89,7 +89,7 @@ function Index() {
               </CardDescription>
             </CardHeader>
             <CardContent className='min-h-36 flex justify-center items-center'>
-              <div className='flex flex-row' >
+              <div className='flex flex-row min-h-48'>
                 <div style={{ padding: '10px' }} className='flex flex-col justify-center'>
                   <ChevronUpIcon className='h-6 w-6' /> <ChevronDownIcon className='h-6 w-6' />
                 </div>
