@@ -1,9 +1,17 @@
-import json
 import requests
+import json
+import datetime
+import re
+import time
 
-diff_file = "diff.txt"
 
-def openai_call(diff_file):
+diff_filepath = "Team04/diff.txt"
+
+
+def openai_call(diff_filepath):
+
+    with open(diff_filepath, 'r') as file:
+        git_diff = file.read()
 
     url = 'https://api.openai.com/v1/chat/completions'
 
@@ -20,18 +28,23 @@ def openai_call(diff_file):
                 },
                 {
                     "role": "user",
-                    "content": diff_file
+                    "content": git_diff
                 }
             ],
         "model": "gpt-4",
-        "max_tokens": 800,
+        "max_tokens": 1800,
         "temperature": 0.1,
         "top_p": 0.1
     }
 
     response = requests.post(url, headers=headers, data=json.dumps(data))
+    print(f"Response: \n\n\n", response)
     API_Data = response.json()
     message = API_Data['choices'][0]['message']['content']
     commit_message = message.split('.', 1)
     
     return commit_message
+
+commit_message = openai_call(diff_filepath)
+
+print(commit_message)
