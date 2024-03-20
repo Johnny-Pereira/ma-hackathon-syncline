@@ -8,7 +8,7 @@ export const Route = createRootRouteWithContext<{
 
 function RootComponent() {
   return (
-    <div>
+    <div className="px-8 py-2">
       <Header />
       <Outlet />
     </div>
