@@ -4,5 +4,15 @@ import { Button } from "./ui/button";
 export const LoginButton = () => {
   const { loginWithRedirect } = useAuth0();
 
-  return <Button onClick={() => loginWithRedirect()}>Login</Button>;
+  return (
+    <Button
+      onClick={() => loginWithRedirect()}
+      style={{
+        backgroundColor: "white",
+        color: "rgba(10,18,100,255)",
+      }}
+    >
+      Login
+    </Button>
+  );
 };
