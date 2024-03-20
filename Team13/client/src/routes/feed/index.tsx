@@ -1,32 +1,26 @@
 import { ouQueryOptions } from "@/api/ou";
-import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { Link, Outlet } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { SampleOUs } from "@/data";
 import OUCard from "@/components/ou-card";
 
 export const Route = createFileRoute("/feed/")({
   // loader: ({ context: { queryClient } }) =>
   //   queryClient.ensureQueryData(ouQueryOptions),
+  loader: () => SampleOUs,
   component: FeedComponent,
 });
 
 function FeedComponent() {
-  // const { data, isLoading, isError } = useQuery(ouQueryOptions);
-
-  // if (isLoading) {
-  //   return <>Loading...</>;
-  // }
-
-  // if (isError || !data) {
-  //   return <>Error fetching data.</>;
-  // }
+  const data = Route.useLoaderData();
 
   return (
     <div className="p-2 flex gap-2 flex-col w-full h-full flex justify-center">
-      <h1 className="text-3xl text-center">Moody's Blind</h1>
-      <ul className="flex flex-wrap gap-x-3">
-        {SampleOUs.map((ou) => (
+      <h1 className="text-3xl text-center font-extrabold font-america">
+        MOODYS<span className="font-thin">BLIND</span>
+      </h1>
+      <ul className="flex flex-wrap gap-x-3 justify-center">
+        {data.map((ou) => (
           <li key={ou.id}>
             <Link
               to="/feed/$ouCode"
@@ -43,7 +37,7 @@ function FeedComponent() {
           </li>
         ))}
       </ul>
-      <Outlet />
+      {/* <Outlet /> */}
     </div>
   );
 }

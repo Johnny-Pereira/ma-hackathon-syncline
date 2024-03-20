@@ -2,7 +2,7 @@ import type { OUType } from "@/api/ou";
 import {
   Card,
   CardContent,
-  CardFooter,
+  CardDescription,
   CardHeader,
   CardTitle,
 } from "./ui/card";
@@ -12,9 +12,9 @@ export default function OUCard({ name, code, avg_rating }: OUType) {
     <Card className="w-56">
       <CardHeader>
         <CardTitle>{name}</CardTitle>
+        <CardDescription>{code}</CardDescription>
       </CardHeader>
-      <CardContent>{code}</CardContent>
-      <CardFooter>Average Rating: {avg_rating} / 5</CardFooter>
+      <CardContent>Average Rating: {avg_rating} / 5</CardContent>
     </Card>
   );
 }
