@@ -3,7 +3,7 @@ name: Push Text File Test
 on:
   push:
     branches:
-      - "Team04*"
+      - "Team-4*"
 
 
 jobs:
