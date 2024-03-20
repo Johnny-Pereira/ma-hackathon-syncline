@@ -84,7 +84,7 @@ body {
   color: #475569;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 420px) {
   .sidebar {
     width: 100%;
     /* Full width on small screens */
