@@ -21,7 +21,7 @@ jobs:
         run: |
           cd Team04
           if [ $(git rev-list --count HEAD) -gt 1 ]; then
-            git diff HEAD~1 HEAD > diff.txt
+            git diff HEAD~1 HEAD -- ./Team04 > diff.txt
           else
             echo "Not enough commits for a diff." > diff.txt
           fi
