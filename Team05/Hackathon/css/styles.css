@@ -1,0 +1,114 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure the body takes up at least the full height of the viewport */
+}
+
+header {
+    background-color: #091164;
+    color: #fff;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    z-index: 100;
+}
+
+header img {
+    max-height: 48px;
+    max-width: 180px;
+    height: auto;
+    width: auto;
+}
+
+.sidenav {
+    width: 200px;
+    background-color: #fff;
+    padding-top: 125px;
+}
+
+.sidenav ul {
+    list-style: none;
+    padding: 0 0 0 25px;
+    margin: 0;
+}
+
+.sidenav ul li {
+    margin-bottom: 60px;
+}
+
+.sidenav ul li a {
+    text-decoration: none;
+    font-size: 25px;
+    color: #091164;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.mainContainer {
+    display: flex;
+    height: 100vh;
+}
+
+.content {
+    flex: 1;
+    padding-left: 40px;
+    padding-top: 60px;
+}
+
+.userImage {
+    display: flex;
+    justify-content: center; /* Center horizontally */ 
+    margin-bottom: 0;
+}
+
+.userName {
+    display: flex;
+    margin-top: 0px;
+    justify-content: center; /* Center horizontally */ 
+}
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 23px;
+    color: #091164;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+textarea {
+    width: 90%;
+    padding: 40px;
+    margin-bottom: 20px;
+    border: 1px solid #091164;
+    border-radius: 3px;
+    resize: vertical;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #091164;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+} 
+
+textarea::placeholder {
+    color: #091164;
+}
+
+img.moody {
+    max-height: 250px;
+    max-width: 200px;
+    height: auto;
+    width: auto;
+}
+
+.userName h1 {
+    color: #091164;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
