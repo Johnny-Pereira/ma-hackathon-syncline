@@ -1,0 +1,4 @@
+# .gitignore
+Dockerfile
+.mypy_cache/
+.chainlit/
