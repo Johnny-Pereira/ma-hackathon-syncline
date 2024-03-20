@@ -7,10 +7,7 @@ export const LoginButton = () => {
   return (
     <Button
       onClick={() => loginWithRedirect()}
-      style={{
-        backgroundColor: "white",
-        color: "rgba(10,18,100,255)",
-      }}
+      variant='secondary'
     >
       Login
     </Button>
