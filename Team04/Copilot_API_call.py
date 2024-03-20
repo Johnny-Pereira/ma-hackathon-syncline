@@ -1,6 +1,8 @@
 import json
 import requests
 
+diff_file = "diff.txt"
+
 def openai_call(diff_file):
 
     url = 'https://api.openai.com/v1/chat/completions'
