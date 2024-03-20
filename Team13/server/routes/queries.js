@@ -31,39 +31,31 @@ router.get("/reviews", getFeedback);
 router.get('/reviews/:OU', (req, res) => {
     console.log(req.params);
     console.log(req.query.sort);
-    console.log(req.query.page);
-
     const sortParam = req.query.sort;
     let query = '';
-
     switch (sortParam) {
         case 'oldest':
-            // Sorting logic for sorting date oldest to newest 
-            query = 'SELECT title, feedback, rating, upvotes, downvotes, date FROM blind.feedback WHERE "OUID" = $1 ORDER BY date ASC OFFSET $2 LIMIT 25';
+            // Sorting logic for sorting date oldest to newest
+            query = 'SELECT title, feedback, rating, upvotes, downvotes, date FROM blind.feedback WHERE "OUID" = $1 ORDER BY date ASC';
             break;
         case 'highest':
             // Sorting logic for sorting reviews highest to lowest
-            query = 'SELECT title, feedback, rating, upvotes, downvotes, date FROM blind.feedback WHERE "OUID" = $1 ORDER BY rating DESC OFFSET $2 LIMIT 25';
+            query = 'SELECT title, feedback, rating, upvotes, downvotes, date FROM blind.feedback WHERE "OUID" = $1 ORDER BY rating DESC';
             break;
         case 'lowest':
             // Sorting logic for sorting reviews lowest to highest
-            query = 'SELECT title, feedback, rating, upvotes, downvotes, date FROM blind.feedback WHERE "OUID" = $1 ORDER BY rating ASC OFFSET $2 LIMIT 25';
+            query = 'SELECT title, feedback, rating, upvotes, downvotes, date FROM blind.feedback WHERE "OUID" = $1 ORDER BY rating ASC';
             break;
         case 'relevant':
             // Sorting logic for sorting relevancy highest to lowest based on difference of up and down votes
-            query = 'SELECT title, feedback, rating, upvotes, downvotes, date FROM blind.feedback WHERE "OUID" = $1 ORDER BY (upvotes - downvotes) DESC OFFSET $2 LIMIT 25';
+            query = 'SELECT title, feedback, rating, upvotes, downvotes, date FROM blind.feedback WHERE "OUID" = $1 ORDER BY (upvotes - downvotes) DESC';
             break;
         default:
             // Sorting logic for sorting date newest to oldest (default), no query param
-            query = 'SELECT title, feedback, rating, upvotes, downvotes, date FROM blind.feedback WHERE "OUID" = $1 ORDER BY date DESC OFFSET $2 LIMIT 25';
+            query = 'SELECT title, feedback, rating, upvotes, downvotes, date FROM blind.feedback WHERE "OUID" = $1 ORDER BY date DESC';
             break;
     }
-
-    const offset = (req.query.page - 1) * 25; 
-    const params = [req.params.OU.toUpperCase(), offset];
-    console.log(params)
-
-    pool.query(query, params, (error, results) => {
+    pool.query(query, [req.params.OU.toUpperCase()], (error, results) => {
         if (error) {
             throw error;
         }

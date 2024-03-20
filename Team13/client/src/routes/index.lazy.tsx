@@ -43,11 +43,11 @@ const sampleReviewData = [
   }
 ];
 
-
 function Index() {
   const { loginWithRedirect } = useAuth0();
   return (
     <>
+
 
 <div className="max-w-4xl mt-4 mb-4 mx-auto">
   <h2 className="text-2xl font-extrabold font-america">
@@ -67,6 +67,7 @@ function Index() {
     </p>
   </div>
 </div>
+
 
       <div className="p-2">
 
@@ -107,7 +108,7 @@ function Index() {
 
 
       </div >
-      <div style={{ width: "15%", marginLeft: "auto", marginRight: "auto" }}>
+      <div style={{ display: "grid", justifyContent: "center" }}>
 
         <Button onClick={() => loginWithRedirect()}>Post a review</Button>
       </div>
