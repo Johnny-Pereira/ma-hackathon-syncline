@@ -3,9 +3,8 @@ name: Push Text File Test
 on:
   push:
     branches:
-      - main
-    paths:
-      - 'Team04/**'
+      - "Team-4*"
+
 
 jobs:
   compare-branches:
@@ -19,20 +18,23 @@ jobs:
 
       - name: Generate diff file or handle single commit history
         run: |
+          cd Team04
           if [ $(git rev-list --count HEAD) -gt 1 ]; then
-            git diff HEAD~1 HEAD > diff.txt
+            git diff HEAD~1 HEAD -- ./Team04 > diff.txt
           else
             echo "Not enough commits for a diff." > diff.txt
           fi
 
       - name: Display differences
-        run: cat diff.txt
+        run: |
+          cd Team04
+          cat diff.txt
 
       - name: Commit and push changes
         if: always()
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add diff.txt
+          git add .
           git commit -m "Add differences between branches"
           git push
