@@ -4,8 +4,7 @@ on:
   push:
     branches:
       - "Team04*"
-    branches-ignore:
-      - main
+
 
 jobs:
   compare-branches:
