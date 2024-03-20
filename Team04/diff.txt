@@ -1,82 +1,77 @@
-diff --git a/.github/workflows/team4.yml b/.github/workflows/team4.yml
-index 93ae1de..cad3760 100644
---- a/.github/workflows/team4.yml
-+++ b/.github/workflows/team4.yml
-@@ -36,6 +36,6 @@ jobs:
-         run: |
-           git config --local user.email "action@github.com"
-           git config --local user.name "GitHub Action"
--          git add diff.txt
-+          git add .
-           git commit -m "Add differences between branches"
-           git push
-\ No newline at end of file
-diff --git a/Team04/aws.py b/Team04/aws.py
-deleted file mode 100644
-index d1da210..0000000
---- a/Team04/aws.py
-+++ /dev/null
-@@ -1,51 +0,0 @@
--import requests
--import json
--import datetime
--import re
--import time
--
--#load git_diff
--
--diff_filepath = "C:\\Users\\arthurj\\OneDrive - moodys.com\\Desktop\\diff_example.txt"
--
--with open(diff_filepath, 'r') as file:
--    git_diff = file.read()
--
--
--def openai_call(diff_file):
--
--    url = 'https://api.openai.com/v1/chat/completions'
--
--    headers = {
--        'accept': 'application/json',
--        'x-api-client': 'team_2', 
--        'x-api-key': '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',   
--        'Content-Type': 'application/json'
--    }
--
--    data = {
--        "messages": [
--                {
--                    "role": "system",
--                    "content": "The included string is a git diff script. From this file you should create e both a commit message to be added to the newest version of our repo and a more in depth summary which will provide developers with further detail about version changes. The commit message should not exceed a single sentence. The detailed summary should be bullet point structured. The structure of both should follow application development best practices."
--                },
--                {
--                    "role": "user",
--                    "content": git_diff
--                }
--            ],
--        "model": "gpt-4",
--        "max_tokens": 800,
--        "temperature": 0.1,
--        "top_p": 0.1
--    }
--
--    response = requests.post(url, headers=headers, data=json.dumps(data))
--    print(response.status_code)
--    API_Data = response.json()
--    print(API_Data)
--
--    return message
--
--commit_output = openai_call(git_diff)
--print(commit_output)
-\ No newline at end of file
-diff --git a/Team04/clean_differences.py b/Team04/clean_differences.py
-index 5327d13..d76fea1 100644
---- a/Team04/clean_differences.py
-+++ b/Team04/clean_differences.py
-@@ -1,3 +1,3 @@
- import re
- 
--print("yes")
-\ No newline at end of file
-+print("yes123")
+diff --git a/.github/workflows/trigger_team04_openAPI_call.yml b/.github/workflows/trigger_team04_openAPI_call.yml
+new file mode 100644
+index 0000000..9257055
+--- /dev/null
++++ b/.github/workflows/trigger_team04_openAPI_call.yml
+@@ -0,0 +1,29 @@
++name: Python Script Execution
++
++on:
++  push:
++    branches:
++        - main
++    paths:
++        - 'Team04/**/*.txt'
++
++jobs:
++  run_python_script:
++    runs-on: ubuntu-latest
++
++    steps:
++      - name: Checkout repository
++        uses: actions/checkout@v2
++
++      - name: Set up Python
++        uses: actions/setup-python@v2
++        with:
++          python-version: '3.x'
++
++      - name: Install dependencies
++        run: |
++          python -m pip install --upgrade pip
++          pip install -r requirements.txt 
++
++      - name: Run Python script
++        run: python Copilot_API_call.py
+diff --git a/Team04/Copilot_API_call.py b/Team04/Copilot_API_call.py
+new file mode 100644
+index 0000000..e8fd0db
+--- /dev/null
++++ b/Team04/Copilot_API_call.py
+@@ -0,0 +1,35 @@
++import json
++import requests
++
++def openai_call(diff_file):
++
++    url = 'https://api.openai.com/v1/chat/completions'
++
++    headers = {
++        'Authorization': 'Bearer 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',
++        'Content-Type': 'application/json'
++    }
++
++    data = {
++        "messages": [
++                {
++                    "role": "system",
++                    "content": "The included string is a git diff script. From this file you should create a commit message to be added to the newest version of our repo. The commit message should not exceed a single sentence. The structure should follow application development best practices."
++                },
++                {
++                    "role": "user",
++                    "content": diff_file
++                }
++            ],
++        "model": "gpt-4",
++        "max_tokens": 800,
++        "temperature": 0.1,
++        "top_p": 0.1
++    }
++
++    response = requests.post(url, headers=headers, data=json.dumps(data))
++    API_Data = response.json()
++    message = API_Data['choices'][0]['message']['content']
++    commit_message = message.split('.', 1)
++    
++    return commit_message
 \ No newline at end of file
