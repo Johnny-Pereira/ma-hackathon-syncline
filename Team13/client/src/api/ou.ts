@@ -5,7 +5,7 @@ export type OUType = {
   id: number;
   code: string; // shorthand designator i.e. KYC, CRE
   name: string; // official desginator i.e. Know Your Customer
-  avg_rating: number;
+  ou_rating: number;
 };
 
 export const fetchOus = async () => {

@@ -10,15 +10,12 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { reviewQueryOptions } from "@/api/review";
-import { SampleOUs, SampleReviews } from "@/data";
+import { SampleOUs } from "@/data";
 import ReviewCard from "@/components/review-card";
 
 export const Route = createFileRoute("/feed/$ouCode")({
-  // loader: ({ context: { queryClient }, params: { ouCode } }) =>
-  //   queryClient.ensureQueryData(reviewQueryOptions(ouCode)),
-  loader: ({ params: { ouCode } }) => {
-    return SampleReviews.filter((r) => r.ouCode === ouCode);
-  },
+  loader: ({ context: { queryClient }, params: { ouCode } }) =>
+    queryClient.ensureQueryData(reviewQueryOptions(ouCode)),
   component: FeedRoute,
 });
 
@@ -49,11 +46,15 @@ export function FeedRoute() {
         ) : (
           reviews.map((review) => (
             <ReviewCard
+              OUID={review.OUID}
               title={review.title}
+              date={review.date}
+              downvotes={review.downvotes}
+              upvotes={review.upvotes}
               feedback={review.feedback}
               rating={review.rating}
-              ouCode={review.ouCode}
-              date={review.date}
+              userId={review.userId}
+              key={review.id}
               id={review.id}
             />
           ))

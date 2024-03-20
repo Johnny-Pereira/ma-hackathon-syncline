@@ -10,27 +10,29 @@ import {
 import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
 
 export default function ReviewCard({
-  title,
+  OUID,
+  date,
+  downvotes,
+  upvotes,
   feedback,
   rating,
-  ouCode,
-  date,
+  title,
 }: ReviewType) {
   return (
-    <Card className="h-48">
+    <Card className="h-52">
       <CardHeader>
         {/* title and 3 dots */}
         <CardTitle className="flex space-x-2">
           <h1>{title} - </h1>
           <p className="text-gray-400">{date}</p>
         </CardTitle>
-        <CardDescription>{ouCode}</CardDescription>
+        <CardDescription>{OUID}</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="flex items-center gap-x-4">
-          <span className="flex flex-col">
+          <span className="flex flex-col items-center">
             <ChevronUpIcon />
-            {/* score */}
+            {upvotes - downvotes}
             <ChevronDownIcon />
           </span>
           <p>{feedback}</p>

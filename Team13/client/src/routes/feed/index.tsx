@@ -5,14 +5,15 @@ import { SampleOUs } from "@/data";
 import OUCard from "@/components/ou-card";
 
 export const Route = createFileRoute("/feed/")({
-  // loader: ({ context: { queryClient } }) =>
-  //   queryClient.ensureQueryData(ouQueryOptions),
-  loader: () => SampleOUs,
+  loader: ({ context: { queryClient } }) =>
+    queryClient.ensureQueryData(ouQueryOptions),
+  // loader: () => SampleOUs,
   component: FeedComponent,
 });
 
 function FeedComponent() {
   const data = Route.useLoaderData();
+  console.log(data);
 
   return (
     <div className="p-2 flex gap-2 flex-col w-full h-full flex justify-center">
@@ -31,7 +32,7 @@ function FeedComponent() {
                 id={ou.id}
                 name={ou.name}
                 code={ou.code}
-                avg_rating={ou.avg_rating}
+                ou_rating={ou.ou_rating}
               />
             </Link>
           </li>

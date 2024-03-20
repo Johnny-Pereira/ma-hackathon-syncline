@@ -7,14 +7,14 @@ import {
   CardTitle,
 } from "./ui/card";
 
-export default function OUCard({ name, code, avg_rating }: OUType) {
+export default function OUCard({ name, code, ou_rating }: OUType) {
   return (
-    <Card className="w-56">
+    <Card className="w-56 h-36">
       <CardHeader>
         <CardTitle>{name}</CardTitle>
         <CardDescription>{code}</CardDescription>
       </CardHeader>
-      <CardContent>Average Rating: {avg_rating} / 5</CardContent>
+      <CardContent>Average Rating: {ou_rating} / 5</CardContent>
     </Card>
   );
 }

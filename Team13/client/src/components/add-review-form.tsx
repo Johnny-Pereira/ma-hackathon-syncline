@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -21,22 +22,42 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
+import { addReview } from "@/api/review";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const formSchema = z.object({
-  title: z.string(),
+  OUID: z.string(),
   feedback: z.string(),
   rating: z.coerce.number().min(1).max(5),
-  ouCode: z.string(),
+  title: z.string(),
 });
 
 export default function AddReviewForm() {
+  const { user } = useAuth0();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    // post to api
+  const client = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: addReview,
+    onSuccess: () => {
+      client.invalidateQueries({ queryKey: ["reviews"] });
+    },
+  });
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (!user || !user.sub) {
+      console.log("does not exist");
+      return;
+    }
+    const data = { ...values, userId: user.sub };
+
+    const response = await mutation.mutateAsync(data);
+    console.log(response);
+    toast.success(response.statusText);
   }
 
   return (
@@ -91,7 +112,7 @@ export default function AddReviewForm() {
 
         <FormField
           control={form.control}
-          name="ouCode"
+          name="OUID"
           render={({ field }) => (
             <FormItem className="w-1/2">
               <FormLabel>Organizational Unit</FormLabel>
