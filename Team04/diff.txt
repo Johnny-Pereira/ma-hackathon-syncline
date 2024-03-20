@@ -52,64 +52,39 @@ index a3ceae6..e8fd0db 100644
 +    return commit_message
 \ No newline at end of file
 diff --git a/Team04/diff.txt b/Team04/diff.txt
-index e7cdb6d..3ae6659 100644
+index e7cdb6d..bc208bf 100644
 --- a/Team04/diff.txt
 +++ b/Team04/diff.txt
-@@ -1,54 +1,77 @@
-+diff --git a/.github/workflows/trigger_team04_openAPI_call.yml b/.github/workflows/trigger_team04_openAPI_call.yml
-+new file mode 100644
-+index 0000000..9257055
-+--- /dev/null
-++++ b/.github/workflows/trigger_team04_openAPI_call.yml
-+@@ -0,0 +1,29 @@
-++name: Python Script Execution
-++
-++on:
-++  push:
-++    branches:
-++        - main
-++    paths:
-++        - 'Team04/**/*.txt'
-++
-++jobs:
-++  run_python_script:
-++    runs-on: ubuntu-latest
-++
-++    steps:
-++      - name: Checkout repository
-++        uses: actions/checkout@v2
-++
-++      - name: Set up Python
-++        uses: actions/setup-python@v2
-++        with:
-++          python-version: '3.x'
-++
-++      - name: Install dependencies
-++        run: |
-++          python -m pip install --upgrade pip
-++          pip install -r requirements.txt 
-++
-++      - name: Run Python script
-++        run: python Copilot_API_call.py
+@@ -1,54 +1,183 @@
  diff --git a/Team04/Copilot_API_call.py b/Team04/Copilot_API_call.py
 -index 01441b9..a3ceae6 100644
----- a/Team04/Copilot_API_call.py
-+new file mode 100644
-+index 0000000..e8fd0db
-+--- /dev/null
++index a3ceae6..e8fd0db 100644
+ --- a/Team04/Copilot_API_call.py
  +++ b/Team04/Copilot_API_call.py
 -@@ -1,9 +1,17 @@
 --import json
 - import requests
-+@@ -0,0 +1,35 @@
- +import json
+-+import json
 -+import datetime
 -+import re
 -+import time
 -+
 -+
 -+diff_filepath = "Team04/diff.txt"
-- 
++@@ -1,17 +1,7 @@
++-import requests
++ import json
++-import datetime
++-import re
++-import time
++-
++-
++-diff_filepath = "Team04/diff.txt"
++-
++-
++-def openai_call(diff_filepath):
+++import requests
+  
 --diff_file = "diff.txt"
 - 
 --def openai_call(diff_file):
@@ -117,67 +92,283 @@ index e7cdb6d..3ae6659 100644
 -+
 -+    with open(diff_filepath, 'r') as file:
 -+        git_diff = file.read()
-- 
--     url = 'https://api.openai.com/v1/chat/completions'
-- 
++-    with open(diff_filepath, 'r') as file:
++-        git_diff = file.read()
+++def openai_call(diff_file):
+  
+      url = 'https://api.openai.com/v1/chat/completions'
+  
 -@@ -20,18 +28,23 @@ def openai_call(diff_file):
--                 },
--                 {
--                     "role": "user",
++@@ -28,23 +18,18 @@ def openai_call(diff_filepath):
+                  },
+                  {
+                      "role": "user",
 --                    "content": diff_file
 -+                    "content": git_diff
--                 }
--             ],
--         "model": "gpt-4",
++-                    "content": git_diff
+++                    "content": diff_file
+                  }
+              ],
+          "model": "gpt-4",
 --        "max_tokens": 800,
 -+        "max_tokens": 1800,
--         "temperature": 0.1,
--         "top_p": 0.1
--     }
-- 
--     response = requests.post(url, headers=headers, data=json.dumps(data))
--+    print(f"Response: \n\n\n", response)
--     API_Data = response.json()
--     message = API_Data['choices'][0]['message']['content']
--     commit_message = message.split('.', 1)
--     
---    return commit_message
--\ No newline at end of file
--+    return commit_message
-++import requests
-++
-++def openai_call(diff_file):
- +
--+commit_message = openai_call(diff_filepath)
-++    url = 'https://api.openai.com/v1/chat/completions'
- +
--+print(commit_message)
-++    headers = {
-++        'Authorization': 'Bearer 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',
-++        'Content-Type': 'application/json'
-++    }
-++
-++    data = {
-++        "messages": [
-++                {
-++                    "role": "system",
-++                    "content": "The included string is a git diff script. From this file you should create a commit message to be added to the newest version of our repo. The commit message should not exceed a single sentence. The structure should follow application development best practices."
-++                },
-++                {
-++                    "role": "user",
-++                    "content": diff_file
-++                }
-++            ],
-++        "model": "gpt-4",
++-        "max_tokens": 1800,
 ++        "max_tokens": 800,
-++        "temperature": 0.1,
-++        "top_p": 0.1
-++    }
-++
-++    response = requests.post(url, headers=headers, data=json.dumps(data))
-++    API_Data = response.json()
-++    message = API_Data['choices'][0]['message']['content']
-++    commit_message = message.split('.', 1)
-++    
-++    return commit_message
+          "temperature": 0.1,
+          "top_p": 0.1
+      }
+  
+      response = requests.post(url, headers=headers, data=json.dumps(data))
+-+    print(f"Response: \n\n\n", response)
++-    print(f"Response: \n\n\n", response)
+      API_Data = response.json()
+      message = API_Data['choices'][0]['message']['content']
+      commit_message = message.split('.', 1)
+      
+ -    return commit_message
++-
++-commit_message = openai_call(diff_filepath)
++-
++-print(commit_message)
  \ No newline at end of file
+ +    return commit_message
+-+
+-+commit_message = openai_call(diff_filepath)
+-+
+-+print(commit_message)
+ \ No newline at end of file
++diff --git a/Team04/diff.txt b/Team04/diff.txt
++index e7cdb6d..3ae6659 100644
++--- a/Team04/diff.txt
+++++ b/Team04/diff.txt
++@@ -1,54 +1,77 @@
+++diff --git a/.github/workflows/trigger_team04_openAPI_call.yml b/.github/workflows/trigger_team04_openAPI_call.yml
+++new file mode 100644
+++index 0000000..9257055
+++--- /dev/null
++++++ b/.github/workflows/trigger_team04_openAPI_call.yml
+++@@ -0,0 +1,29 @@
++++name: Python Script Execution
++++
++++on:
++++  push:
++++    branches:
++++        - main
++++    paths:
++++        - 'Team04/**/*.txt'
++++
++++jobs:
++++  run_python_script:
++++    runs-on: ubuntu-latest
++++
++++    steps:
++++      - name: Checkout repository
++++        uses: actions/checkout@v2
++++
++++      - name: Set up Python
++++        uses: actions/setup-python@v2
++++        with:
++++          python-version: '3.x'
++++
++++      - name: Install dependencies
++++        run: |
++++          python -m pip install --upgrade pip
++++          pip install -r requirements.txt 
++++
++++      - name: Run Python script
++++        run: python Copilot_API_call.py
++ diff --git a/Team04/Copilot_API_call.py b/Team04/Copilot_API_call.py
++-index 01441b9..a3ceae6 100644
++---- a/Team04/Copilot_API_call.py
+++new file mode 100644
+++index 0000000..e8fd0db
+++--- /dev/null
++ +++ b/Team04/Copilot_API_call.py
++-@@ -1,9 +1,17 @@
++--import json
++- import requests
+++@@ -0,0 +1,35 @@
++ +import json
++-+import datetime
++-+import re
++-+import time
++-+
++-+
++-+diff_filepath = "Team04/diff.txt"
++- 
++--diff_file = "diff.txt"
++- 
++--def openai_call(diff_file):
++-+def openai_call(diff_filepath):
++-+
++-+    with open(diff_filepath, 'r') as file:
++-+        git_diff = file.read()
++- 
++-     url = 'https://api.openai.com/v1/chat/completions'
++- 
++-@@ -20,18 +28,23 @@ def openai_call(diff_file):
++-                 },
++-                 {
++-                     "role": "user",
++--                    "content": diff_file
++-+                    "content": git_diff
++-                 }
++-             ],
++-         "model": "gpt-4",
++--        "max_tokens": 800,
++-+        "max_tokens": 1800,
++-         "temperature": 0.1,
++-         "top_p": 0.1
++-     }
++- 
++-     response = requests.post(url, headers=headers, data=json.dumps(data))
++-+    print(f"Response: \n\n\n", response)
++-     API_Data = response.json()
++-     message = API_Data['choices'][0]['message']['content']
++-     commit_message = message.split('.', 1)
++-     
++--    return commit_message
++-\ No newline at end of file
++-+    return commit_message
++++import requests
++++
++++def openai_call(diff_file):
++ +
++-+commit_message = openai_call(diff_filepath)
++++    url = 'https://api.openai.com/v1/chat/completions'
++ +
++-+print(commit_message)
++++    headers = {
++++        'Authorization': 'Bearer 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',
++++        'Content-Type': 'application/json'
++++    }
++++
++++    data = {
++++        "messages": [
++++                {
++++                    "role": "system",
++++                    "content": "The included string is a git diff script. From this file you should create a commit message to be added to the newest version of our repo. The commit message should not exceed a single sentence. The structure should follow application development best practices."
++++                },
++++                {
++++                    "role": "user",
++++                    "content": diff_file
++++                }
++++            ],
++++        "model": "gpt-4",
++++        "max_tokens": 800,
++++        "temperature": 0.1,
++++        "top_p": 0.1
++++    }
++++
++++    response = requests.post(url, headers=headers, data=json.dumps(data))
++++    API_Data = response.json()
++++    message = API_Data['choices'][0]['message']['content']
++++    commit_message = message.split('.', 1)
++++    
++++    return commit_message
++ \ No newline at end of file
+diff --git a/Team07/.gitignore b/Team07/.gitignore
+index 1e38e9d..77b9752 100644
+--- a/Team07/.gitignore
++++ b/Team07/.gitignore
+@@ -1,4 +1,5 @@
+ # .gitignore
++config.json
+ Dockerfile
+ .mypy_cache/
+-.chainlit/
++
+diff --git a/Team07/README.md b/Team07/README.md
+index 9fac3e2..d7c6272 100644
+--- a/Team07/README.md
++++ b/Team07/README.md
+@@ -6,7 +6,7 @@ This is the main repository for Team07's project for the MA-COR Hackathon 2024.
+ 
+ ## Project Structure
+ 
+-- `config.toml`: Contains configuration settings for the project.
++- `scripts/`: Contains scripts for cleaning data and generating sample prompts
+ - `data/`: Contains CSV files with message data.
+ - `src/`: Contains the source code for the project.
+ 
+@@ -15,17 +15,18 @@ This is the main repository for Team07's project for the MA-COR Hackathon 2024.
+ To set up the project, follow these steps:
+ 
+ 1. Clone the repository.
+-2. Install the necessary dependencies.
+-3. Run the project.
++2. Install the necessary dependencies by running the requirements.txt file (pip install -r requirements.txt).
++3. Locate app.py (in src/ directory)
+ 
+-## Contributing
++## Running App
+ 
+-We welcome contributions! Please see our contributing guidelines for more details.
++To run the application, run the command:
++chainlit run _path_to_app.py_
+ 
+-## License
++## Contributors
+ 
+-This project is licensed under the MIT License.
+-
+-## Contact
+-
+-For any questions or concerns, please open an issue on this repository.
++- Ferina Patel (@FerinaP)
++- Luis Merida (@meridal)
++- Payton Chi (@Pichiota)
++- Rajrishi Das (@dasr11)
++- Swapna Savalgi (@Swapna-Savalgi-moodys)
+diff --git a/Team07/requirements.txt b/Team07/requirements.txt
+new file mode 100644
+index 0000000..0ac044b
+--- /dev/null
++++ b/Team07/requirements.txt
+@@ -0,0 +1,7 @@
++# requirements.txt
++
++pandas
++openai==0.28.0
++langchain
++langchain-community
++chainlit
+\ No newline at end of file
+diff --git a/Team07/scripts/data.py b/Team07/scripts/clean_data.py
+similarity index 99%
+rename from Team07/scripts/data.py
+rename to Team07/scripts/clean_data.py
+index 27dbeff..a5e4bcc 100644
+--- a/Team07/scripts/data.py
++++ b/Team07/scripts/clean_data.py
+@@ -48,4 +48,5 @@ def main():
+     clean_messages("cleaned_messages.csv")
+ 
+ if __name__ == "__main__":
+-    main()
+\ No newline at end of file
++    main()
++    
+\ No newline at end of file
+diff --git a/Team07/scripts/prompt.py b/Team07/scripts/sample_prompts.py
+similarity index 99%
+rename from Team07/scripts/prompt.py
+rename to Team07/scripts/sample_prompts.py
+index 36fa92c..e3abc1e 100644
+--- a/Team07/scripts/prompt.py
++++ b/Team07/scripts/sample_prompts.py
+@@ -2,6 +2,7 @@ import os
+ import openai
+ import json
+ import pandas as pd
++
+ with open("config.json") as file:
+     config = json.load(file)
+ openai.api_key = config.get('key')
+@@ -40,4 +41,4 @@ def main():
+     print(get_clean_messages_prompts("cleaned_messages.csv"))
+ 
+ if __name__ == "__main__":
+-    main()
+\ No newline at end of file
++    main()
