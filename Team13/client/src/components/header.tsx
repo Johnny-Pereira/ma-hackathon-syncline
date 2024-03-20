@@ -8,9 +8,9 @@ export default function Header() {
   const { isAuthenticated } = useAuth0();
 
   return (
-    <div className="flex justify-between sticky top-0">
+    <div className="flex justify-between sticky top-0 bg-blue-800 h-20 px-4 py-2 items-center" style={{ backgroundColor: "rgba(10,18,100,255)"}}>
       <Link to={isAuthenticated ? "/feed" : "/"}>
-        <h1 className="font-america text-xl font-extrabold">
+        <h1 className="font-america text-xl font-extrabold text-white">
           MOODYS<span className="font-thin">BLIND</span>
         </h1>
       </Link>
