@@ -1,2 +1,2 @@
-# COR_Hackathon2024
-COR Graduates Hackathon 2024
+# ma-hackathon-syncline
+Moody's MATR Hackathon 2024 Project
